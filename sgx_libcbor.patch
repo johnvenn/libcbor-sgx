@@ -1,0 +1,58 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 04122d9..db349b1 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -34,7 +34,7 @@ if(WITH_TESTS)
+     add_definitions(-DWITH_TESTS)
+ endif(WITH_TESTS)
+ 
+-option(WITH_EXAMPLES "Build examples" ON)
++option(WITH_EXAMPLES "Build examples" OFF)
+ 
+ option(HUGE_FUZZ "[TEST] Fuzz through 8GB of data in the test. Do not use with memory instrumentation!" OFF)
+ if(HUGE_FUZZ)
+@@ -163,6 +163,13 @@ else()
+     message(STATUS "LTO is not enabled")
+ endif(use_lto)
+ 
++
++message("cmake current binary dir:"${CMAKE_CURRENT_BINARY_DIR})
++#need to makedir first
++execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory 
++	${CMAKE_CURRENT_BINARY_DIR}/package)
++
++set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/package)
+ add_subdirectory(src)
+ if(use_lto)
+     set_property(DIRECTORY src PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 72a0c90..f09f17a 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -9,8 +9,13 @@ if (NOT DEFINED CMAKE_MACOSX_RPATH)
+ 	set(CMAKE_MACOSX_RPATH 0)
+ endif()
+ 
++message("cbor lib need to include files from sgxsdk:"$ENV{SGX_SDK})
++set(INTEL_SGX_SDK_INC_DIR $ENV{SGX_SDK}/include)
+ add_library(cbor ${SOURCES})
+ target_include_directories(cbor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
++target_include_directories(cbor PRIVATE ${INTEL_SGX_SDK_INC_DIR}/tlibc)
++target_include_directories(cbor PRIVATE ${INTEL_SGX_SDK_INC_DIR})
++target_compile_options(cbor PRIVATE -nostdinc)
+ 
+ # Explicitly link math.h if necessary
+ check_function_exists(ldexp LDEXP_AVAILABLE)
+diff --git a/src/cbor/configuration.h.in b/src/cbor/configuration.h.in
+index 0052a15..0732ec6 100644
+--- a/src/cbor/configuration.h.in
++++ b/src/cbor/configuration.h.in
+@@ -7,7 +7,7 @@
+ 
+ #define CBOR_BUFFER_GROWTH ${CBOR_BUFFER_GROWTH}
+ #define CBOR_MAX_STACK_SIZE ${CBOR_MAX_STACK_SIZE}
+-#cmakedefine01 CBOR_PRETTY_PRINTER
++//#cmakedefine01 CBOR_PRETTY_PRINTER
+ 
+ #define CBOR_RESTRICT_SPECIFIER ${CBOR_RESTRICT_SPECIFIER}
+ #define CBOR_INLINE_SPECIFIER ${CBOR_INLINE_SPECIFIER}

@@ -17,44 +17,26 @@
  - Full support for streams & incremental processing
  - Extensive documentation and test suite
  - No runtime dependencies, small footprint
- 
+  
+## SGX support
+	The forked repo is tailored for CBOR inside SGX. 
+
+
 ## Getting started
 
 ### Compile from source
 
 ```bash
-git clone https://github.com/PJK/libcbor
-cmake -DCMAKE_BUILD_TYPE=Release libcbor
+git clone https://github.com/johnvenn/libcbor-sgx.git libcbor
+cd libcbor && git apply sgx-libcbor.patch && cd ..
+mkdir build && cd build
+cmake ../libcbor
 make
 make install
+
+After all these steps, cbor package is installed in build/package
+Set the include path and lib path to CBOR installation folder. 
 ```
-
-### Homebrew
-
-```bash
-brew install libcbor
-```
-
-### Ubuntu 18.04 and above
-
-```bash
-sudo add-apt-repository universe
-sudo apt-get install libcbor-dev
-```
-
-### Fedora & RPM friends
-
-```bash
-yum install libcbor-devel
-```
-
-### Others 
-
-<details>
-  <summary>Packaged libcbor is available from 15+ major repositories. Click here for more detail</summary>
-  
-  [![Packaging status](https://repology.org/badge/vertical-allrepos/libcbor.svg)](https://repology.org/project/libcbor/versions)
-</details>
 
 ## Usage example
 
