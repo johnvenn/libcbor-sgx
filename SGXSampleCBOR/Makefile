@@ -39,7 +39,7 @@ SGX_DEBUG ?= 1
 include $(SGX_SDK)/buildenv.mk
 
 
-LIBCBOR_INSTALL_DIR = ../build/package
+LIBCBOR_INSTALL_DIR = ../../build/package
 ifeq ($(shell getconf LONG_BIT), 32)
 	SGX_ARCH := x86
 else ifeq ($(findstring -m32, $(CXXFLAGS)), -m32)

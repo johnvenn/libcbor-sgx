@@ -163,10 +163,9 @@ else()
     message(STATUS "LTO is not enabled")
 endif(use_lto)
 
-
-message("cmake current binary dir:"${CMAKE_CURRENT_BINARY_DIR})
+message("cmake current binary dir:" ${CMAKE_CURRENT_BINARY_DIR})
 #need to makedir first
-execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory
+execute_process(COMMAND ${CMAKE_COMMAND} -E make_directory 
 	${CMAKE_CURRENT_BINARY_DIR}/package)
 
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/package)

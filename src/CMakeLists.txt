@@ -9,7 +9,7 @@ if (NOT DEFINED CMAKE_MACOSX_RPATH)
 	set(CMAKE_MACOSX_RPATH 0)
 endif()
 
-message("cbor lib need to include files from sgxsdk:"$ENV{SGX_SDK})
+message("cbor lib need to include files from sgxsdk:" $ENV{SGX_SDK})
 set(INTEL_SGX_SDK_INC_DIR $ENV{SGX_SDK}/include)
 add_library(cbor ${SOURCES})
 target_include_directories(cbor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

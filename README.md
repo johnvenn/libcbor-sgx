@@ -26,6 +26,10 @@
 
 ### Compile from source
 
+Assume you have installed Intel SGX SDK, and set $(SGX_SDK) as system env by 
+"source /opt/intel/sgxsdk/environment" or similar command
+depending on the installation folder of SGXSDK in your system.
+
 ```bash
 git clone https://github.com/johnvenn/libcbor-sgx.git libcbor
 cd libcbor && git apply sgx-libcbor.patch && cd ..
