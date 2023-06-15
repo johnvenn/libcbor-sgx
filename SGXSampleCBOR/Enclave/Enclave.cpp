@@ -34,7 +34,7 @@
 #include <stdarg.h>
 #include <stdio.h> /* vsnprintf */
 #include <string.h>
-//#include <cbor.h>
+#include "cbor.h"
 
 
 /* 
@@ -56,7 +56,7 @@ int printf(const char* fmt, ...)
 void test_lib_cbor()
 {
 	printf("test_lib_cbor\n");
-	/*cbor_item_t* root = cbor_new_definite_map(2);
+	cbor_item_t* root = cbor_new_definite_map(2);
 	// Add the content 
 	bool success = cbor_map_add(
 				root, (struct cbor_pair){
@@ -66,7 +66,7 @@ void test_lib_cbor()
 				root, (struct cbor_pair){
 				.key = cbor_move(cbor_build_uint8(42)),
 				.value = cbor_move(cbor_build_string("Is the answer"))});
-	if (!success) return 1;
+	if (!success) abort();
 	// Output: `length` bytes of data in the `buffer`
 	unsigned char* buffer;
 	size_t buffer_size;
@@ -77,5 +77,5 @@ void test_lib_cbor()
 	free(buffer);
 
 	//fflush(stdout);
-	cbor_decref(&root);*/
+	cbor_decref(&root);
 }
