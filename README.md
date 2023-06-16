@@ -43,7 +43,7 @@ After all these steps, cbor package is installed in build/package
 Set the include path and lib path to CBOR installation folder. 
 
 A SampleCode to run cbor functions inside enclave is provided in SGXSampleCBOR. After the above
-steps, you can use the built include files and lib inside this sample.
+steps, you can use the built out include files and lib inside this sample.
 
 
 ```
